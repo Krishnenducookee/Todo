@@ -8,9 +8,9 @@ const EditTask = () => {
   const {id}=useParams()
     const [inputData, setinputData] = useState({task:"",date:"",workspace:""})
   const [invalidData,setInvalidData]=useState({})
-  // const [oldData, setoldData] = useState([])
+  
   const navigate=useNavigate()
-console.log(inputData);
+
   useEffect(()=>{
             axios.get(`http://localhost:2000/router/editTaskOld/${id}`).then((response)=>{
                setinputData(response.data.data)
