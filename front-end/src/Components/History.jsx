@@ -1,4 +1,4 @@
-import axios from "axios"
+  import axios from "axios"
 import { useEffect, useState } from "react"
 import { Link } from "react-router-dom"
 
@@ -10,27 +10,30 @@ const History = () => {
         setDoneTask(response.data.data);
        })
   },[])
+ const theadarray=["Sl.No","Task","Workspace","Due Date","Description","Issued From"]
+
   return (
     <div className='bg-green-300 h-screen'>
       <div className="mx-96">
       <table className='border boredr-slate-200 border-separate border-spacing-2'>
     <thead>
-      <tr><th className='border border-green-900'>Sl.No</th>
-      <th className='border border-green-900'>Task</th>
-      <th className='border border-green-900'>Workspace</th>
-      <th className='border border-green-900'>Due Date</th>
-      <th className='border border-green-900'>Status</th>
-      <th className='border border-green-900'>Issued from</th></tr>
+      <tr>
+      {theadarray.map((data1,index)=>(
+    
+    <th className='border border-green-900'>{data1}</th>
+   
+   ))}
+      </tr>
     </thead>
     <tbody>
-      {doneTask?.map((data,key)=>(<tr>
-        <td className='border border-green-900'>{key+1}</td>
-    <td className='border border-green-900'>{data.task}</td>
-    <td className='border border-green-900'>{data.workspace}</td>
-    <td className='border border-green-900'>{data.date}</td>
-    <td className='border border-green-900'>{data.taskstatus}</td>
-    <td className='border border-green-900'>{data.adddate}</td></tr>
-    ))}</tbody></table></div>  <div>
+      {doneTask?.map((data,key)=>{
+      const mapdata=[index+1,data.task,data.workspace,data.date,data.description,data.adddate]
+      return (<tr>
+        {mapdata.map((data2,index)=>(
+    <td className='border border-green-900'>{data2}</td>
+    ))}
+        </tr>)
+      })}</tbody></table></div>  <div>
     <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
      <a> <Link to={'/'}>Home</Link></a> </button>
     </div></div>
