@@ -16,7 +16,7 @@ router.post("/addTask", async (req, res) => {
       workspace,
       taskstatus,
     });
-    console.log("dsg", result);
+   
 
     if (result) {
       return res.status(200).json({
@@ -56,7 +56,7 @@ router.get("/completedTask", async (req, res) => {
         .status(200)
         .json({ success: true, error: false, data: data, messege: "Success" });
     }
-    console.log(data);
+    
   } catch (error) {
     return res
       .status(500)
@@ -69,7 +69,7 @@ router.get("/editTaskOld/:id", async (req, res) => {
     const id = req.params.id;
 
     const oldData = await taskmodel.findOne({ _id: id });
-    console.log("h", oldData);
+    
     return res.status(200).json({
       success: true,
       error: false,
