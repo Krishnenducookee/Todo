@@ -3,19 +3,19 @@ import { Link } from 'react-router-dom'
 import axios from 'axios'
 
 const Home = () => {
-  // const [donetask, isDone] = useState({id:true})
+  
   const [pendingTask, setpendingTask] = useState([])
   useEffect(()=>{
        axios.get('http://localhost:2000/router/viewalltask').then((response)=>{
         setpendingTask(response.data.data);
-        console.log(pendingTask);
+       
        })
   },[])
 
   const done=(id)=>{
       setpendingTask(pendingTask.filter((t)=>t._id!==id))
       axios.post(`http://localhost:2000/router/done/${id}`).then((response)=>{
-        console.log("ok");
+        
       })
   }
   return (
