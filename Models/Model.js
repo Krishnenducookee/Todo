@@ -1,12 +1,15 @@
 const mongoose = require("mongoose");
+
 const schema = mongoose.Schema;
+
 const taskschema = new schema({
-  task: { type: String },
-  date: { type: String },
-  adddate: { type: String },
-  workspace: { type: String },
-  description: { type: String },
-  taskstatus: { type: String },
+  taskName: { type: String, required: true },
+  dueDate: { type: Date, required: true },
+  isPersonal: { type: Boolean, default: true },
+  taskDescription: { type: String, default: "" },
+  isDone: { type: Boolean, default: false },
 });
+
 const taskmodel = mongoose.model("task_tb", taskschema);
+
 module.exports = taskmodel;
