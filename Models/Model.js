@@ -8,7 +8,8 @@ const taskschema = new schema({
   isPersonal: { type: Boolean, default: true },
   taskDescription: { type: String, default: "" },
   isDone: { type: Boolean, default: false },
-});
+},
+  timestamp());
 
 const taskmodel = mongoose.model("task_tb", taskschema);
 
