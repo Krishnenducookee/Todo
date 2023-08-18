@@ -9,7 +9,7 @@ const taskschema = new schema({
   taskDescription: { type: String, default: "" },
   isDone: { type: Boolean, default: false },
 },
-  timestamp());
+{ timrstamp:true});
 
 const taskmodel = mongoose.model("task_tb", taskschema);
 
