@@ -1,6 +1,5 @@
 const express = require("express");
-const taskmodel = require("../Models/Model");
-
+const taskBody = require("../Controller/Task_body");
 const router = express.Router();
 
 const routeArray = [
@@ -11,52 +10,6 @@ const routeArray = [
   { method: "post", routes: "/editTask" },
   { method: "post", routes: "/done/:id" },
 ];
-
-//Task Body
-const addTask = (req) => {
-  const { task, date, description, workspace } = req.body;
-  adddate = new Date();
-  taskstatus = "Pending";
-  const result = taskmodel.create({
-    task,
-    date,
-    description,
-    adddate,
-    workspace,
-    taskstatus,
-  });
-};
-
-const viewAllTask = () => {
-  const data = taskmodel.find({ taskstatus: "Pending" });
-};
-
-const viewCompletedTask = () => {
-  const data = taskmodel.find({ taskstatus: "Done" });
-};
-
-const editTaskOld = (req) => {
-  const id = req.params.id;
-
-  const oldData = taskmodel.findOne({ _id: id });
-};
-
-const editTask = (req) => {
-  const id = req.body._id;
-  const data = {
-    task: req.body.task,
-    date: req.body.date,
-    description: req.body.description,
-    workspace: req.body.workspace,
-  };
-  const result = taskmodel.updateOne({ _id: id }, { $set: data });
-};
-
-const done = (req) => {
-  const id = req.params.id;
-  const updation = { taskstatus: "Done" };
-  const result = taskmodel.updateOne({ _id: id }, { $set: updation });
-};
 
 //Main Router
 router.post("/addTask", async (req, taskFunction, res) => {
@@ -73,3 +26,78 @@ router.post("/addTask", async (req, taskFunction, res) => {
       res.status(500).json({ success: false, error: true, messege: "Error" });
     });
 });
+
+// router.get("/viewallTask", async (req, res) => {
+//   try {
+//     if (data) {
+//       return res
+//         .status(200)
+//         .json({ success: true, error: false, data: data, messege: "Success" });
+//     }
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ success: false, error: true, messege: "error" });
+//   }
+// });
+
+// router.get("/completedTask", async (req, res) => {
+//   try {
+//     const data = await taskmodel.find({ taskstatus: "Done" });
+//     if (data) {
+//       return res
+//         .status(200)
+//         .json({ success: true, error: false, data: data, messege: "Success" });
+//     }
+//     console.log(data);
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ success: false, error: true, messege: "error" });
+//   }
+// });
+
+// router.get("/editTaskOld/:id", async (req, res) => {
+//   try {
+//     console.log("h", oldData);
+//     return res.status(200).json({
+//       success: true,
+//       error: false,
+//       data: oldData,
+//       messege: "Success",
+//     });
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ success: false, error: true, messege: "error" });
+//   }
+// });
+
+// router.post("/editTask", async (req, res) => {
+//   try {
+//     if (result) {
+//       return res.status(200).json({
+//         success: true,
+//         error: false,
+//         data: result,
+//         messege: "success",
+//       });
+//     }
+//   } catch (error) {
+//     return res
+//       .status(500)
+//       .json({ success: false, error: true, messege: "error" });
+//   }
+// });
+// router.post("/done/:id", async (req, res) => {
+//   try {
+//     if (result) {
+//       return res.status(200).json({
+//         success: true,
+//         error: false,
+//         messege: "Done",
+//       });
+//     }
+//   } catch (error) {}
+// });
+module.exports = router;
