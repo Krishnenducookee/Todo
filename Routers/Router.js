@@ -32,7 +32,7 @@ const routeArray = [
 ];
 
 //Main Router
-for (const eachroute in routeArray) {
+for (const eachroute of routeArray) {
   router[eachroute.method](eachroute.route, async (req, res) => {
     eachroute
       .routeController(req, res)
