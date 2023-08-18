@@ -1,3 +1,4 @@
+const taskmodel = require("../Models/Model");
 module.exports[
   ((addTask = async (req) => {
     const { taskName, dueDate, taskDescription, isPersonal } = req.body;
@@ -44,7 +45,12 @@ module.exports[
   }),
   (done = (req) => {
     const id = req.params.id;
-    const updation = { isDone: true };
-    const result = taskmodel.updateOne({ _id: id }, { $set: updation });
+    const existingTask = taskmodel.findOne({ _id: id });
+    if (existingTask) {
+      existingTask.isDone = true;
+      existingTask.save();
+    }
+    // const updation = { isDone: true };
+    // const result = taskmodel.updateOne({ _id: id }, { $set: updation });
   }))
 ];
