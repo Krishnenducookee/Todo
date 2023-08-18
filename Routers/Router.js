@@ -11,24 +11,24 @@ const {
 const router = Router();
 
 const routeArray = [
-  { method: "post", route: "/addTask", routeController: addTask() },
+  { method: "post", route: "/addTask", routeController: addTask },
   {
     method: "get",
     route: "/viewAllTask",
-    routeController: viewCompletedTask(),
+    routeController: viewCompletedTask,
   },
   {
     method: "get",
     route: "/viewCompletedTask",
-    routeController: viewPendingTasks(),
+    routeController: viewPendingTasks,
   },
   {
     method: "get",
     route: "/editTaskOld/:id",
-    routeController: getTaskData(),
+    routeController: getTaskData,
   },
-  { method: "post", route: "/editTask", routeController: editTask() },
-  { method: "post", route: "/done/:id", routeController: done() },
+  { method: "post", route: "/editTask", routeController: editTask },
+  { method: "post", route: "/done/:id", routeController: done },
 ];
 
 //Main Router
