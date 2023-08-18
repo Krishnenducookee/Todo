@@ -49,6 +49,7 @@ module.exports[
     if (existingTask) {
       existingTask.isDone = true;
       existingTask.save();
+      return existingTask;
     }
     // const updation = { isDone: true };
     // const result = taskmodel.updateOne({ _id: id }, { $set: updation });
