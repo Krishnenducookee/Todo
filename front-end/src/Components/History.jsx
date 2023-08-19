@@ -10,7 +10,7 @@ const History = () => {
         setDoneTask(response.data.data);
        })
   },[])
- const theadarray=["Sl.No","Task","Workspace","Due Date","Description",]
+ const theadarray=["Sl.No","Task","Workspace","Due Date","Description","Issued From"]
 
   return (
     <div className='bg-green-300 h-screen'>
@@ -27,7 +27,7 @@ const History = () => {
     </thead>
     <tbody>
       {doneTask?.map((data,index)=>{
-      const mapdata=[index+1,data.taskName,data.isPersonal,data.dueDate,data.taskDescription]
+      const mapdata=[index+1,data.taskName,data.isPersonal,data.dueDate,data.taskDescription,data.createdAt]
       return (<tr>
         {mapdata.map((data2,index)=>(
     <td className='border border-green-900'>{data2}</td>
