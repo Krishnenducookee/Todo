@@ -18,7 +18,7 @@ const ViewAllTasks = () => {
     navigate(`/editTask/${id}`)
 
   }
- const theadarray=["Sl.No","Task","Workspace","Due Date","Description","Issued From","Action"]
+ const theadarray=["Sl.No","Task","Workspace","Due Date","Description","Action"]
 
   const done=(id)=>{
     setUpcomingTasks(upcomingTasks.filter((t)=>t._id!==id))
@@ -41,7 +41,7 @@ const ViewAllTasks = () => {
   </thead>
   <tbody>
     {upcomingTasks.map((data,index)=>{ 
-      const mapdata=[index+1,data.task,data.workspace,data.date,data.description,data.adddate]
+      const mapdata=[index+1,data.taskName,data.isPersonal,data.dueDate,data.taskDescription,]
     return (<tr>
      {mapdata.map((data2,index)=>(
     <td className='border border-green-900'>{data2}</td>
@@ -55,7 +55,7 @@ const ViewAllTasks = () => {
   </tbody></table></div>
   <div>
             <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
-             <a> <Link to={'/'}>Home</Link></a> </button>
+             <a href=" "> <Link to={'/'}>Home</Link></a> </button>
             </div> </div>
   )
 }
