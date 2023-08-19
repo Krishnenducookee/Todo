@@ -3,7 +3,7 @@ const taskmodel = require("../Models/Model");
 module.exports = {
   addTask: async (req, res) => {
     const { taskName, dueDate, taskDescription, isPersonal } = req.body;
-    // const result = await taskmodel.create({
+    // const newTask = await taskmodel.create({
     //   taskName,
     //   dueDate,
     //   taskDescription,
@@ -15,14 +15,15 @@ module.exports = {
       dueDate,
       isPersonal,
     });
-    await newTask.save();
-    return newTask;
+    if (taskName !== " " && dueDate != " " && isPersonal !== " ") {
+      return await newTask.save();
+    }
   },
   viewPendingTasks: async (req, res) => {
-    return await taskmodel.find({ isDone: true });
+    return await taskmodel.find({ isDone: false });
   },
   viewCompletedTask: async (req, res) => {
-    return await taskmodel.find({ isDone: false });
+    return await taskmodel.find({ isDone: true });
   },
   getTaskData: async (req, res) => {
     const id = req.params.id;
@@ -50,10 +51,10 @@ module.exports = {
   },
   done: async (req, res) => {
     const id = req.params.id;
-    const existingTask = taskmodel.findOne({ _id: id });
+    const existingTask = await taskmodel.findOne({ _id: id });
     if (existingTask) {
       existingTask.isDone = true;
-      return await existingTask.save();
+      return existingTask.save();
     }
     // const updation = { isDone: true };
     // const result = taskmodel.updateOne({ _id: id }, { $set: updation });
