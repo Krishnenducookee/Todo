@@ -5,7 +5,7 @@ import { Link, useNavigate } from 'react-router-dom'
 
 
 const Addpage = () => {
-  const [inputData, setinputData] = useState({task:"",date:"",workspace:""})
+  const [inputData, setinputData] = useState({taskName:" ",dueDate:" ",isPersonal:" "})
   const [invalidData,setInvalidData]=useState({})
   const navigate=useNavigate()
 
@@ -14,33 +14,37 @@ const Addpage = () => {
   const collectData=(e)=>{
      const {name,value}=e.target
     setinputData({...inputData,[name]:value})
+     console.log(inputData);
     
   }
 
-  const validation=(data)=>{
+  const validation=(values)=>{
     let error={}
-    if(data.task===""){
-      error.task="Enter Task Title"
+    if(values.taskName===" "){
+      error.taskName="Enter Task Title"
     }
     let currentDate=new Date()
-    if(data.date==="" && data.date <currentDate){
-      error.date="Enter Valid Due Date for Your Task"
+    if(values.dueDate===" " && values.dueDate <currentDate){
+      error.dueDate="Enter Valid Due Date for Your Task"
     }
-    if(data.workspace===""){
-      error.workspace="Select Task Workspace"
+    if(values.isPersonal===" "){
+      error.isPersonal="Select Task Workspace"
     }
    return error;
   }
   const saveData=(e)=>{
     e.preventDefault();
      setInvalidData(validation(inputData))
-     if(invalidData){
+    // console.log(Object.keys(invalidData));
+    
+     if(Object.keys(invalidData)===0){
       axios.post('http://localhost:2000/router/addTask',inputData).then((response)=>{
+        console.log(response);
         navigate('/viewtask')
       })}
      
 else{
- 
+   navigate('/')
 
 }
       
@@ -57,11 +61,11 @@ else{
       >
         Task
       </label>
-      <span style={{color:"red"}}>{invalidData.task}</span>
+      <span style={{color:"red"}}>{invalidData.taskName}</span>
       <input
         className="appearance-none block w-full text-black border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="text"
-        name='task'
+        name='taskName'
         onChange={collectData}
         placeholder="Task"
       />
@@ -72,11 +76,11 @@ else{
       >
          Due Date
       </label>
-      <span style={{color:"red"}}>{invalidData.date}</span>
+      <span style={{color:"red"}}>{invalidData.dueDate}</span>
       <input
         className="appearance-none block w-full text-black border border-green-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="date"
-        name='date'
+        name='dueDate'
         onChange={collectData}
         placeholder="Date"
         id='txtDate'
@@ -95,7 +99,7 @@ else{
         className="appearance-none block w-full text-black border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         placeholder="Decription"
         onChange={collectData}
-        name='description'
+        name='taskDescription'
       />
     </div>
   </div>
@@ -108,15 +112,16 @@ else{
         Workspace
       </label>
       <div className="relative">
-      <span style={{color:"red"}}>{invalidData.workspace}</span>
+      <span style={{color:"red"}}>{invalidData.isPersonal}</span>
         <select
           className="block appearance-none w-full border border-green-500 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-900"
+          name='isPersonal'
           onChange={collectData}
-          name='workspace'
+          
         >
            <option defaultChecked>Workspace</option>
-          <option value="personal">Personal</option>
-          <option value="official">Official</option>
+          <option value="Personal" >Personal</option>
+          <option value="Official">Official</option>
         </select>
       </div>
     </div>
