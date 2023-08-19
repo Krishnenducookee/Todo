@@ -6,11 +6,11 @@ import { Link, useNavigate, useParams } from "react-router-dom"
 
 const EditTask = () => {
   const {id}=useParams()
-    const [inputData, setinputData] = useState({task:"",date:"",workspace:""})
+    const [inputData, setinputData] = useState({taskName:"",dueDate:"",isPersonal:""})
   const [invalidData,setInvalidData]=useState({})
-  
+  // const [oldData, setoldData] = useState([])
   const navigate=useNavigate()
-
+console.log(inputData);
   useEffect(()=>{
             axios.get(`http://localhost:2000/router/editTaskOld/${id}`).then((response)=>{
                setinputData(response.data.data)
@@ -67,12 +67,12 @@ else{
       >
         Task
       </label>
-      <span style={{color:"red"}}>{invalidData.task}</span>
+      <span style={{color:"red"}}>{invalidData.taskName}</span>
       <input
         className="appearance-none block w-full text-black border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="text"
-        name='task'
-        value={inputData.task}
+        name='taskName'
+        value={inputData.taskName}
         onChange={collectData}
         placeholder="Task"
       />
@@ -83,12 +83,12 @@ else{
       >
          Due Date
       </label>
-      <span style={{color:"red"}}>{invalidData.date}</span>
+      <span style={{color:"red"}}>{invalidData.dueDate}</span>
       <input
         className="appearance-none block w-full text-black border border-green-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="date"
-        name='date'
-        value={inputData.date}
+        name='dueDate'
+        value={inputData.dueDate}
         onChange={collectData}
         placeholder="Date"
         id='txtDate'
@@ -107,10 +107,10 @@ else{
       </label>
       <textarea
         className="appearance-none block w-full text-black border border-green-500 rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
-        placeholder="Decription"
+        placeholder="Description"
         onChange={collectData}
-        name='description'
-        value={inputData.description}
+        name='taskDescription'
+        value={inputData.taskDescription}
       />
     </div>
   </div>
@@ -123,12 +123,12 @@ else{
         Workspace
       </label>
       <div className="relative">
-      <span style={{color:"red"}}>{invalidData.workspace}</span>
+      <span style={{color:"red"}}>{invalidData.isPersonal}</span>
         <select
           className="block appearance-none w-full border border-green-500 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-900"
           onChange={collectData}
-          name='workspace'
-          value={inputData.workspace}
+          name='isPersonal'
+          value={inputData.isPersonal}
         >
            <option defaultChecked>Workspace</option>
           <option value="personal">Personal</option>
@@ -148,7 +148,7 @@ else{
 
  <div>
 <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
- <a> <Link to={'/'}>Home</Link></a> </button>
+ <a href=" "> <Link to={'/'}>Home</Link></a> </button>
 </div> </div>
     </div>
   )
