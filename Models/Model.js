@@ -6,8 +6,8 @@ const taskschema = new schema(
   {
     taskName: { type: String, required: true },
     dueDate: { type: Date, required: true },
-    isPersonal: { type: Boolean, default: true },
-    taskDescription: { type: String, default: "" },
+    isPersonal: { type: String, required: true },
+    taskDescription: { type: String, default: " " },
     isDone: { type: Boolean, default: false },
   },
   { timestamp: true }
