@@ -2,7 +2,6 @@ import axios from 'axios'
 import  {useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Toast from './Toast'
-import ErrorToast from './ErrorToast'
 
 
 
@@ -58,9 +57,9 @@ const [isSubmit, setisSubmit] = useState('')
     <div className='bg-green-300 h-screen'>
       {(() => {
         if (toast.current==='success') {
-          return <Toast/>
+          return <Toast toast='success'/>
         }
-        else if(toast.current==='error'){ return <ErrorToast/>}
+        else if(toast.current==='error'){ return <Toast toast='error'/>}
       })()}
       <div className='pt-16 pl-96'>
       
