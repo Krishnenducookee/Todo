@@ -2,6 +2,7 @@ import axios from 'axios'
 import  {useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import Toast from './Toast'
+import ErrorToast from './ErrorToast'
 
 
 
@@ -9,7 +10,7 @@ import Toast from './Toast'
 const Addpage = () => {
   const [inputData, setinputData] = useState({taskName:" ",dueDate:" ",isPersonal:" "})
   const [invalidData,setInvalidData]=useState({})
-const [isSubmit, setisSubmit] = useState(false)
+const [isSubmit, setisSubmit] = useState('')
   const toast=useRef(false)
   const navigate=useNavigate()
 
@@ -27,6 +28,7 @@ const [isSubmit, setisSubmit] = useState(false)
     if(values.taskName===" "){
       error.taskName="Enter Task Title"
     }
+    
     if(values.dueDate===" "){
       error.dueDate="Enter Valid Due Date for Your Task"
     }
@@ -40,13 +42,14 @@ const [isSubmit, setisSubmit] = useState(false)
      setInvalidData(validation(inputData))
      setisSubmit(true)  
      if(Object.keys(invalidData).length===0 && isSubmit){ 
-      toast.current=true    
-      axios.post('http://localhost:2000/router/addTask',inputData).then((response)=>{         
+         
+      axios.post('http://localhost:2000/router/addTask',inputData).then((response)=>{ 
+        toast.current='success'
         setTimeout(() => {
           navigate('/viewtask')
         }, 2000);      
       }).catch((error)=>{
-        navigate('/')
+        toast.current='error'
       })}
           
 
@@ -54,9 +57,10 @@ const [isSubmit, setisSubmit] = useState(false)
   return (
     <div className='bg-green-300 h-screen'>
       {(() => {
-        if (toast.current) {
+        if (toast.current==='success') {
           return <Toast/>
         }
+        else if(toast.current==='error'){ return <ErrorToast/>}
       })()}
       <div className='pt-16 pl-96'>
       
@@ -134,7 +138,7 @@ const [isSubmit, setisSubmit] = useState(false)
       </div>
     </div>
     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0 ml-40">
-    <button className=' mt-8 px-4 py-1 border rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
+    <button className=' mt-8 px-4 py-1 border rounded-full text-sm bg-green-500 bord hover:bg-green-800'>
      Add Task </button>
       
     </div>
@@ -143,7 +147,7 @@ const [isSubmit, setisSubmit] = useState(false)
 
       </div>
       <div>
-            <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
+            <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-800'>
              <a href=' '> <Link to={'/'}>Home</Link></a> </button>
             </div>
     </div>
