@@ -1,12 +1,16 @@
 import axios from 'axios'
-import React, { useState } from 'react'
+import  {useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import Toast from './Toast'
+
 
 
 
 const Addpage = () => {
   const [inputData, setinputData] = useState({taskName:" ",dueDate:" ",isPersonal:" "})
   const [invalidData,setInvalidData]=useState({})
+const [isSubmit, setisSubmit] = useState(false)
+  const toast=useRef(false)
   const navigate=useNavigate()
 
   
@@ -14,17 +18,16 @@ const Addpage = () => {
   const collectData=(e)=>{
      const {name,value}=e.target
     setinputData({...inputData,[name]:value})
-     console.log(inputData);
+     
     
   }
-
+        
   const validation=(values)=>{
     let error={}
     if(values.taskName===" "){
       error.taskName="Enter Task Title"
     }
-    let currentDate=new Date()
-    if(values.dueDate===" " && values.dueDate <currentDate){
+    if(values.dueDate===" "){
       error.dueDate="Enter Valid Due Date for Your Task"
     }
     if(values.isPersonal===" "){
@@ -35,23 +38,28 @@ const Addpage = () => {
   const saveData=(e)=>{
     e.preventDefault();
      setInvalidData(validation(inputData))
-    // console.log(Object.keys(invalidData));
-    
-     if(Object.keys(invalidData)===0){
-      axios.post('http://localhost:2000/router/addTask',inputData).then((response)=>{
-        console.log(response);
-        navigate('/viewtask')
+     setisSubmit(true)  
+     if(Object.keys(invalidData).length===0 && isSubmit){ 
+      toast.current=true    
+      axios.post('http://localhost:2000/router/addTask',inputData).then((response)=>{         
+        setTimeout(() => {
+          navigate('/viewtask')
+        }, 2000);      
+      }).catch((error)=>{
+        navigate('/')
       })}
-     
-else{
-   navigate('/')
+          
 
-}
-      
   }
   return (
     <div className='bg-green-300 h-screen'>
+      {(() => {
+        if (toast.current) {
+          return <Toast/>
+        }
+      })()}
       <div className='pt-16 pl-96'>
+      
       <form className="w-full max-w-lg" onSubmit={saveData}>
   <div className="flex flex-wrap -mx-3 mb-6">
     <div className="w-full md:w-1/2 px-3 mb-6 md:mb-0">
@@ -61,7 +69,7 @@ else{
       >
         Task
       </label>
-      <span style={{color:"red"}}>{invalidData.taskName}</span>
+      <span style={{color:"red"}}>{invalidData.taskName? invalidData.taskName :""}</span>
       <input
         className="appearance-none block w-full text-black border rounded py-3 px-4 mb-3 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="text"
@@ -76,7 +84,7 @@ else{
       >
          Due Date
       </label>
-      <span style={{color:"red"}}>{invalidData.dueDate}</span>
+      <span style={{color:"red"}}>{invalidData.dueDate? invalidData.dueDate :""}</span>
       <input
         className="appearance-none block w-full text-black border border-green-500 rounded py-3 px-4 leading-tight focus:outline-none focus:bg-white focus:border-green-900"
         type="date"
@@ -112,7 +120,7 @@ else{
         Workspace
       </label>
       <div className="relative">
-      <span style={{color:"red"}}>{invalidData.isPersonal}</span>
+      <span style={{color:"red"}}>{invalidData.isPersonal? invalidData.isPersonal :""}</span>
         <select
           className="block appearance-none w-full border border-green-500 text-black py-3 px-4 pr-8 rounded leading-tight focus:outline-none focus:bg-white focus:border-green-900"
           name='isPersonal'
@@ -136,7 +144,7 @@ else{
       </div>
       <div>
             <button className=' mt-8 mx-96 px-4 py-1 border font-semibold rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
-             <a> <Link to={'/'}>Home</Link></a> </button>
+             <a href=' '> <Link to={'/'}>Home</Link></a> </button>
             </div>
     </div>
   )
