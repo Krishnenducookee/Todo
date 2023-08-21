@@ -134,7 +134,7 @@ const [isSubmit, setisSubmit] = useState(false)
       </div>
     </div>
     <div className="w-full md:w-1/3 px-3 mb-6 md:mb-0 ml-40">
-    <button className=' mt-8 px-4 py-1 border rounded-full text-sm bg-green-900 bord hover:bg-green-600'>
+    <button className=' mt-8 px-4 py-1 border rounded-full text-sm bg-green-500 bord hover:bg-green-900'>
      Add Task </button>
       
     </div>
