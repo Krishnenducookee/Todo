@@ -15,6 +15,7 @@ module.exports = {
       dueDate,
       isPersonal,
     });
+
     if (taskName !== " " && dueDate != " " && isPersonal !== " ") {
       return await newTask.save();
     }
@@ -32,31 +33,31 @@ module.exports = {
   editTask: async (req, res) => {
     const id = req.body._id;
     const existingTask = await taskmodel.findOne({ _id: id });
-    if (existingTask) {
-      existingTask.taskName = req.body.taskName;
-      existingTask.dueDate = req.body.dueDate;
-      existingTask.taskDescription = req.body.taskDescription;
-      existingTask.isPersonal = req.body.isPersonal;
-      return await existingTask.save();
-    }
+     if (existingTask) {
+    //   existingTask.taskName = req.body.taskName;
+    //   existingTask.dueDate = req.body.dueDate;
+    //   existingTask.taskDescription = req.body.taskDescription;
+    //   existingTask.isPersonal = req.body.isPersonal;
+    //   return await existingTask.save();
+    // }
 
-    // const data = {
-    //   task: req.body.task,
-    //   date: req.body.date,
-    //   description: req.body.description,
-    //   workspace: req.body.workspace,
-    // };
+    const data = {
+      taskName: req.body.taskName,
+      dueDate: req.body.dueDate,
+      taskDescription: req.body.taskDescription,
+      isPersonal: req.body.isPersonal,
+    };
     // const updatedTask = ["taskName"];
-    // return (result = taskmodel.updateOne({ _id: id }, { $set: data }));
-  },
+     return (result = taskmodel.updateOne({ _id: id }, { $set: data }));
+  }},
   done: async (req, res) => {
     const id = req.params.id;
     const existingTask = await taskmodel.findOne({ _id: id });
     if (existingTask) {
-      existingTask.isDone = true;
-      return existingTask.save();
-    }
-    // const updation = { isDone: true };
-    // const result = taskmodel.updateOne({ _id: id }, { $set: updation });
-  },
+    //   existingTask.isDone = true;
+    //   return existingTask.save();
+    // }
+     const updation = { isDone: true };
+     const result = taskmodel.updateOne({ _id: id }, { $set: updation });
+  }},
 };
