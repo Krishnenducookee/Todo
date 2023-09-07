@@ -2,21 +2,21 @@ const taskmodel = require("../Models/Model");
 
 module.exports = {
   addTask: async (req, res) => {
-    const { taskName, dueDate, taskDescription, isPersonal } = req.body;
+    const { taskName, dueDate, taskDescription, workSpace } = req.body;
     // const newTask = await taskmodel.create({
     //   taskName,
     //   dueDate,
     //   taskDescription,
-    //   isPersonal,
+    //   workSpace,
     // });
     const newTask = new taskmodel({
       taskName,
       taskDescription,
       dueDate,
-      isPersonal,
+      workSpace,
     });
 
-    if (taskName !== " " && dueDate != " " && isPersonal !== " ") {
+    if (taskName !== " " && dueDate != " " && workSpace !== " ") {
       return await newTask.save();
     }
   },
@@ -37,7 +37,7 @@ module.exports = {
     //   existingTask.taskName = req.body.taskName;
     //   existingTask.dueDate = req.body.dueDate;
     //   existingTask.taskDescription = req.body.taskDescription;
-    //   existingTask.isPersonal = req.body.isPersonal;
+    //   existingTask.workSpace = req.body.workSpace;
     //   return await existingTask.save();
     // }
 
@@ -45,7 +45,7 @@ module.exports = {
       taskName: req.body.taskName,
       dueDate: req.body.dueDate,
       taskDescription: req.body.taskDescription,
-      isPersonal: req.body.isPersonal,
+      workSpace: req.body.workSpace,
     };
     // const updatedTask = ["taskName"];
      return (result = taskmodel.updateOne({ _id: id }, { $set: data }));
@@ -58,6 +58,6 @@ module.exports = {
     //   return existingTask.save();
     // }
      const updation = { isDone: true };
-     const result = taskmodel.updateOne({ _id: id }, { $set: updation });
+     return result = taskmodel.updateOne({ _id: id }, { $set: updation });
   }},
 };
