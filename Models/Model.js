@@ -4,13 +4,17 @@ const schema = Schema;
 
 const taskschema = new schema(
   {
-    taskName: { type: String, required: true },
-    dueDate: { type: Date, required: true },
-    isPersonal: { type: String, required: true },
+    taskName: { type: String, required: [true, "Task Name is required"] },
+    dueDate: {
+      type: Date,
+      required: [true, "Task Due Date is required"],
+      min: new Date(),
+    },
+    workSpace: { type: String, required: [true, "Workspace is required"] },
     taskDescription: { type: String, default: " " },
     isDone: { type: Boolean, default: false },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
 
 const taskmodel = model("task_tb", taskschema);
